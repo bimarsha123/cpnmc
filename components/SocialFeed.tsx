@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { View, FlatList, Dimensions } from "react-native";
+import { View, FlatList, Dimensions, SafeAreaView } from "react-native";
 import { getPosts, getSocial } from "@/config/api"; // Ensure to import the getPosts function
 import PostCard, { PostType } from "@/components/PostCard";
 import { useQuery } from "@tanstack/react-query";
 import Empty from "./empty";
+import { ThemedView } from "./ThemedView";
 
 type SocialFeedProps = {
-    selectedCategory: number | null;
+    selectedCategory: number;
 };
 
 export default function SocialFeed({
@@ -49,9 +50,10 @@ export default function SocialFeed({
         }))
         : [];
     return (
-        <View style={{ width: width }}>
+        <SafeAreaView style={{ width: width }}>
             <FlatList
                 data={postItems}
+                showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <View>
                         {item.author === selectedCategory + 1 && (
@@ -62,16 +64,12 @@ export default function SocialFeed({
                 onRefresh={refetch}
                 refreshing={isRefetching}
                 keyExtractor={(item) => item.id.toString()}
-                ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
                 ListEmptyComponent={() => (
                     <Empty action={refetch} actionButtonTitle="Retry" />
                 )}
-                onEndReached={() => {
-                }}
                 onEndReachedThreshold={0.5}
                 showsVerticalScrollIndicator={false}
             />
-        </View>
-
+        </SafeAreaView>
     );
 }

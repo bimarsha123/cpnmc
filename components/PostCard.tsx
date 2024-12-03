@@ -1,13 +1,10 @@
-import { Linking, Pressable, TouchableOpacity, View } from "react-native";
-import { ThemedText } from "./ThemedText";
-import moment from "moment";
-import { Image } from "expo-image";
+import { Linking } from "react-native";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { base_url, createLog } from "@/config/api";
-import { APP_Platform } from "@/constants/Strings";
+import { createLog } from "@/config/api";
 import { router } from "expo-router";
-import { red } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 import { WebView } from "react-native-webview";
+import { SafeAreaView } from "react-native-safe-area-context";
+import React from "react";
 
 export type PostType = {
   id: number;
@@ -20,8 +17,6 @@ export type PostType = {
 };
 type PostCardProps = {
   post: PostType;
-  showOutletInfo?: boolean;
-  handleBookmarkSuccess?: () => void;
 };
 
 export type createLogBodyType = {
@@ -58,15 +53,7 @@ export default function PostCard({
     <title>Document</title>
 </head>
 <body>
-    <div class="fb-post"
-        data-href="https://www.facebook.com/sulav.amgain/posts/pfbid024x3NZnSfbCh8sXjkt5662LcUeeN2ezUNJ4eeKTSuDHkECvauLCRyEJUockJ1brwHl"
-        data-width="500" data-show-text="true">
-        <blockquote cite="https://www.facebook.com/sulav.amgain/posts/2509083169287112" class="fb-xfbml-parse-ignore">
-            <p>Good morning 🌄
-                Gorkha</p>Posted by <a href="https://www.facebook.com/sulav.amgain">Sulav Amgain</a> on&nbsp;<a
-                href="https://www.facebook.com/sulav.amgain/posts/2509083169287112">Saturday, November 23, 2024</a>
-        </blockquote>
-    </div>
+ ${post.link}
 </body>
 </html>`
 
@@ -77,35 +64,15 @@ export default function PostCard({
   };
 
   return (
-    <View style={{ marginHorizontal: 10 }}>
-      <TouchableOpacity onPress={() => handleOpen(post.link)}>
-        <Image
-          source={{ uri: post.image }}
-          contentFit="cover"
-          style={{
-            width: "100%",
-            height: 150,
-            objectFit: "cover",
-            borderRadius: 10,
-            marginBottom: 10,
-          }}
-        />
-        <ThemedText type="title">{post.title}</ThemedText>
-        <ThemedText type="default">{post.content.substring(0, 40)}</ThemedText>
-
-      </TouchableOpacity>
-
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <ThemedText type="subtext">
-          {moment(post.created_at).fromNow()}
-        </ThemedText>
-      </View>
-    </View>
+    <SafeAreaView>
+      <WebView
+        source={{ html: htmlSrc }}
+        style={{ minHeight: 620, marginRight: 8 }}
+        javaScriptEnabled={true}
+        domStorageEnabled={true}
+        thirdPartyCookiesEnabled={true}
+        userAgent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+      />
+    </SafeAreaView>
   );
 }

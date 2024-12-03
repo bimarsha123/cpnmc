@@ -1,8 +1,9 @@
-import { Stack, SearchParams, useLocalSearchParams } from "expo-router";
+import { Stack, useGlobalSearchParams } from "expo-router";
 export const unstable_settings = {
   initialRouteName: "newsroom",
 };
 export default function NewsroomLayout() {
+  const { name } = useGlobalSearchParams<{ name: string }>();
   return (
     <Stack>
       <Stack.Screen
@@ -23,7 +24,7 @@ export default function NewsroomLayout() {
       <Stack.Screen
         name="organization/[organizationId]"
         options={{
-          headerShown: true, title: "हालका सूचनाहरू हेर्नुहोस्"
+          headerShown: true, title: name
         }}
       />
     </Stack>

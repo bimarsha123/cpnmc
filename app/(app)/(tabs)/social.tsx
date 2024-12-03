@@ -46,7 +46,7 @@ export default function Social() {
   }
 
   const handleChangeTab = (index: number) => {
-    flatlistRef.current?.scrollToIndex({ index: index, animated: true });
+    flatlistRef.current?.scrollToIndex({ index: index, animated: false });
     setActiveTab(index);
   };
 
@@ -68,7 +68,7 @@ export default function Social() {
   };
 
   return (
-    <View>
+    <View style={{ height: '100%' }}>
       <Header />
       <Tabs
         items={items.map((i: SocialType) => i.name)}
@@ -84,11 +84,12 @@ export default function Social() {
             data={items}
             ref={flatlistRef}
             horizontal
+            removeClippedSubviews={true}
+            maxToRenderPerBatch={1}
             pagingEnabled
             bounces={false}
             onMomentumScrollEnd={handleScrollEnd}
             showsHorizontalScrollIndicator={false}
-            maxToRenderPerBatch={1}
             renderItem={({ item }) => (
               <SocialFeed selectedCategory={activeTab} />
             )}

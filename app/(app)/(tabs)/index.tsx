@@ -115,8 +115,8 @@ export default function HomeScreen() {
       footerLink: "/(app)/trending",
     },
     {
-      title: "News for you",
-      subTitle: "Top news for you.",
+      title: "तपाईंको लागि",
+      subTitle: "शीर्ष समाचार",
       data: foryouItems,
     },
   ];

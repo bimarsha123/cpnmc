@@ -1,20 +1,21 @@
 import { FlatList, Image, Pressable, View } from "react-native";
-import { SourceDetailType } from "./OrganizationCard";
+import { OrganiztionDetailType } from "./OrganizationCard";
 import { ThemedText } from "./ThemedText";
 import { Link, router } from "expo-router";
 
-export type OutletsListProps = {
-  data: SourceDetailType[];
+export type OrganiztionListProps = {
+  data: OrganiztionDetailType[];
   refetch: () => void;
 };
 
-export default function OrganizationsList({ data, refetch }: OutletsListProps) {
+export default function OrganizationsList({ data, refetch }: OrganiztionListProps) {
   return (
     <FlatList
       contentContainerStyle={{ marginTop: 10, gap: 20 }}
+      onRefresh={refetch}
       data={data}
-      horizontal
-      showsHorizontalScrollIndicator={false}
+      numColumns={3}
+      key={3}
       ListEmptyComponent={() => (
         <View>
           <ThemedText type="subtext">
@@ -22,7 +23,7 @@ export default function OrganizationsList({ data, refetch }: OutletsListProps) {
           </ThemedText>
         </View>
       )}
-      renderItem={({ item }: { item: SourceDetailType }) => (
+      renderItem={({ item }: { item: OrganiztionDetailType }) => (
         <Pressable onPress={() => {
           router.push({
             pathname: "/(newsroom)/organization/[organizationId]",
@@ -34,12 +35,12 @@ export default function OrganizationsList({ data, refetch }: OutletsListProps) {
         }}>
           <View
             style={{
-              flexDirection: "column",
-              gap: 5,
-              justifyContent: "center",
+              flex: 1,
+              margin: 20,
               alignItems: "center",
             }}
           >
+
             <Image
               src={item.logo}
               style={{

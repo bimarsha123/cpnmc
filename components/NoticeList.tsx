@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from 'react-native';
 import type { ViewStyle } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -85,7 +86,7 @@ const FileList = ({ files = [], onFilePress, style }: FileListProps) => {
   if (!files.length) {
     return (
       <View style={[styles.container, styles.emptyContainer, style]}>
-        <Text style={styles.emptyText}>No files to display</Text>
+        <Text style={styles.emptyText}>कुनै सूचना छैन</Text>
       </View>
     );
   }

@@ -50,9 +50,7 @@ export async function getSocial() {
 
 export async function getOrganizations() {
   try {
-    const res = await axios.get(api_url + "organization/organization/all", {
-      params: { limit: 100 },
-    });
+    const res = await axios.get(api_url + "organization/organization/all");
     return res.data;
 
   } catch (e) {
@@ -60,13 +58,13 @@ export async function getOrganizations() {
   }
 }
 
-export async function getNotice() {
+export const getNotice = async (organizationId: string) => {
+  const fetchUrl = organizationId
+    ? api_url + "organization/notice/all?id=" + organizationId
+    : api_url + "organization/notice/all";
   try {
-    const res = await axios.get(api_url + "organization/notice/all", {
-      params: { limit: 100 },
-    });
+    const res = await axios.get(fetchUrl);
     return res.data;
-
   } catch (e) {
     return console.log({ e });
   }
